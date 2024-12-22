@@ -1,16 +1,45 @@
+buildscript {
+    ext.kotlin_version = '1.9.24'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.10'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
+    
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            if (project.name == 'gallery_saver') {
+                android {
+                    namespace = "carnegietechnologies.gallery_saver"
+                }
+            } else {
+                android {
+                    if (!android.hasProperty('namespace')) {
+                        namespace = "com.wigiart.birthdayapp"
+                    }
+                }
+            }
+        }
+    }
 }
 
-rootProject.buildDir = "../build"
+rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(":app")
+    project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {

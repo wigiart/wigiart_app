@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'birthdayframes.dart'; // Importing the BirthdayFrameWithPets class
 
 class BirthdayHomePage extends StatelessWidget {
-  const BirthdayHomePage({Key? key}) : super(key: key);
+  const BirthdayHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,36 +17,47 @@ class BirthdayHomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Birthday Frame with Pets Container
-            Container(
-              height: 200,
-              margin: const EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(
-                color: Colors.pink[100],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BirthdayFrameWithPets(),
                   ),
-                ],
-              ),
-              child: const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.pets, size: 50),
-                    SizedBox(height: 8),
-                    Text(
-                      'Birthday Frame with Pets',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Create adorable birthday frames with your pets',
-                      style: TextStyle(fontSize: 14),
+                );
+              },
+              child: Container(
+                height: 200,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.pink[100],
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      // ignore: deprecated_member_use
+                      color: Colors.grey.withOpacity(0.3),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
                     ),
                   ],
+                ),
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.pets, size: 50),
+                      SizedBox(height: 8),
+                      Text(
+                        'Birthday Frames',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Create adorable birthday frames.',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -59,6 +71,7 @@ class BirthdayHomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.grey.withOpacity(0.3),
                     blurRadius: 5,
                     offset: const Offset(0, 3),
@@ -94,6 +107,7 @@ class BirthdayHomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.grey.withOpacity(0.3),
                     blurRadius: 5,
                     offset: const Offset(0, 3),
@@ -129,6 +143,7 @@ class BirthdayHomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.grey.withOpacity(0.3),
                     blurRadius: 5,
                     offset: const Offset(0, 3),
@@ -163,6 +178,7 @@ class BirthdayHomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.grey.withOpacity(0.3),
                     blurRadius: 5,
                     offset: const Offset(0, 3),
