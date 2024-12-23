@@ -1,15 +1,29 @@
 buildscript {
-    ext.kotlin_version = '7.4.1'
+    ext.kotlin_version = '1.9.0'
     repositories {
         google()
         mavenCentral()
     }
 
-dependencies {
-    classpath 'com.android.tools.build:gradle:8.0.0'
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
+def getNamespaceForProject(String projectName) {
+    switch (projectName) {
+        case 'gallery_saver':
+            return "carnegietechnologies.gallery_saver"
+        case 'flutter_plugin_android_lifecycle':
+            return "io.flutter.plugins.flutter_plugin_android_lifecycle"
+        case 'image_picker_android':
+            return "io.flutter.plugins.imagepicker"
+        case 'path_provider_android':
+            return "io.flutter.plugins.pathprovider"
+        default:
+            return "com.wigiart.birthdayapp"
+    }
 }
 
 allprojects {
@@ -20,15 +34,17 @@ allprojects {
     
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
-            if (project.name == 'gallery_saver') {
-                android {
-                    namespace = "carnegietechnologies.gallery_saver"
+            android {
+                namespace = getNamespaceForProject(project.name)
+                
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
                 }
-            } else {
-                android {
-                    if (!android.hasProperty('namespace')) {
-                        namespace = "com.wigiart.birthdayapp"
-                    }
+            }
+            tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                kotlinOptions {
+                    jvmTarget = '17'
                 }
             }
         }
