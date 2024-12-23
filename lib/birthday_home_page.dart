@@ -53,7 +53,7 @@ class BirthdayHomePage extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Create adorable birthday frames.',
+                        'Create magical birthday frames.',
                         style: TextStyle(fontSize: 14),
                       ),
                     ],
