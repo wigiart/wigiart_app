@@ -220,7 +220,10 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
                         ElevatedButton.icon(
                           onPressed: () => Navigator.of(context).pop(),
                           icon: const Icon(Icons.close),
-                          label: const Text('Cancel'),
+                          label: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey,
                           ),
@@ -228,7 +231,10 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
                         ElevatedButton.icon(
                           onPressed: saveImage,
                           icon: const Icon(Icons.save),
-                          label: const Text('Save'),
+                          label: const Text(
+                            'Save',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.purple,
                           ),
@@ -292,7 +298,10 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
                             getImage();
                           },
                           icon: const Icon(Icons.upload),
-                          label: const Text('Upload'),
+                          label: const Text(
+                            'Upload',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.purple,
                           ),
@@ -307,7 +316,10 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
                             );
                           },
                           icon: const Icon(Icons.download),
-                          label: const Text('Download'),
+                          label: const Text(
+                            'Download',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.purple,
                           ),
