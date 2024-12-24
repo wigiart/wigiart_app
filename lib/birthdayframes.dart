@@ -131,22 +131,39 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          ClipRect(
-            child: PhotoView(
-              imageProvider: kIsWeb
-                  ? MemoryImage(webImage!)
-                  : FileImage(_image!) as ImageProvider,
-              backgroundDecoration:
-                  const BoxDecoration(color: Colors.transparent),
-              minScale: PhotoViewComputedScale.contained * 0.8,
-              maxScale: PhotoViewComputedScale.covered * 2,
-              initialScale: PhotoViewComputedScale.contained,
-              basePosition: Alignment.center,
+          Center(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRect(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: PhotoView(
+                    imageProvider: kIsWeb
+                        ? MemoryImage(webImage!)
+                        : FileImage(_image!) as ImageProvider,
+                    backgroundDecoration:
+                        const BoxDecoration(color: Colors.transparent),
+                    minScale: PhotoViewComputedScale.contained * 0.8,
+                    maxScale: PhotoViewComputedScale.covered * 2,
+                    initialScale: PhotoViewComputedScale.contained,
+                    basePosition: Alignment.center,
+                    enableRotation: false,
+                    tightMode: true,
+                    filterQuality: FilterQuality.high,
+                    customSize:
+                        Size.square(MediaQuery.of(context).size.width * 0.8),
+                  ),
+                ),
+              ),
             ),
           ),
-          Image.asset(
-            selectedFrame!,
-            fit: BoxFit.cover,
+          Positioned.fill(
+            child: Image.asset(
+              selectedFrame!,
+              fit: BoxFit.contain,
+            ),
           ),
         ],
       ),
@@ -164,53 +181,152 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Edit Photo',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.7,
-                  maxWidth: MediaQuery.of(context).size.width * 0.9,
-                ),
-                child: Screenshot(
-                  controller: screenshotController,
-                  child: _buildEditableImage(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.close),
-                      label: const Text('Cancel'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
+        insetPadding: const EdgeInsets.all(16),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 48, 8),
+                    child: Text(
+                      'Edit Photo',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.7,
+                      maxWidth: MediaQuery.of(context).size.width * 0.9,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Screenshot(
+                      controller: screenshotController,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: _buildEditableImage(),
                       ),
                     ),
-                    ElevatedButton.icon(
-                      onPressed: saveImage,
-                      icon: const Icon(Icons.save),
-                      label: const Text('Save'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(Icons.close),
+                          label: const Text('Cancel'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: saveImage,
+                          icon: const Icon(Icons.save),
+                          label: const Text('Save'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              right: 8,
+              top: 8,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showFramePreview(String frame) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.white,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 48, 8),
+                    child: Text(
+                      'Frame Preview',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.7,
+                      maxWidth: MediaQuery.of(context).size.width * 0.9,
+                    ),
+                    child: Image.asset(
+                      frame,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            getImage();
+                          },
+                          icon: const Icon(Icons.upload),
+                          label: const Text('Upload'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple,
+                          ),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            // Handle download action
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Frame downloaded successfully!'),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.download),
+                          label: const Text('Download'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              right: 8,
+              top: 8,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -221,7 +337,7 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Birthday Frames'),
-        backgroundColor: Colors.purple,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         children: [
@@ -265,7 +381,7 @@ class _BirthdayFrameWithPetsState extends State<BirthdayFrameWithPets> {
                     setState(() {
                       selectedFrame = frames[currentCategory]![index];
                     });
-                    getImage();
+                    _showFramePreview(frames[currentCategory]![index]);
                   },
                   child: Container(
                     decoration: BoxDecoration(
